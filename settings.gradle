@@ -1,0 +1,2 @@
+
+include "post-service", "config-server", "discovery", "edge-server"

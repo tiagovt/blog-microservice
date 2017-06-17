@@ -1,0 +1,21 @@
+server:
+  port: ${PORT:8080}
+  #contextPath: /configclient
+
+logging:
+  levels:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: DEBUG
+    
+endpoints:
+  restart:
+    enabled: true
+    
+    
+
+#spring:
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
