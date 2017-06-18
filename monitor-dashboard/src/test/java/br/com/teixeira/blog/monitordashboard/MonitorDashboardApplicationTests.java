@@ -1,4 +1,4 @@
-package br.com.teixeira.blog.postservice;
+package br.com.teixeira.blog.monitordashboard;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class PostServiceApplicationTests {
+public class MonitorDashboardApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -16,6 +16,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
+    baseName = 'turbine'
     version = '0.0.1-SNAPSHOT'
 }
 
@@ -23,14 +24,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    mavenLocal()
     mavenCentral()
-    maven {
-        // Can't find spring-cloud-build in maven central...
-        url 'http://maven.springframework.org/release'
-    }
 }
-
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") {
@@ -38,19 +33,5 @@ dependencies {
     }
     compile("org.springframework.boot:spring-boot-starter-undertow")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile("org.springframework.cloud:spring-cloud-starter-hystrix:1.0.0.RELEASE")
-    compile("org.springframework.cloud:spring-cloud-starter-eureka:1.0.0.RELEASE")
-    compile("org.springframework.cloud:spring-cloud-starter-bus-amqp:1.0.0.RELEASE")
-    compile("org.springframework.cloud:spring-cloud-netflix-hystrix-amqp:1.0.0.RELEASE")
-	
-	//compile('org.springframework.cloud:spring-cloud-starter-config')
-	
-	compile('org.projectlombok:lombok:1.16.16')
-	
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    compile('org.springframework.cloud:spring-cloud-starter-turbine-amqp:1.0.0.RELEASE')
 }
