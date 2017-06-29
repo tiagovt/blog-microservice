@@ -13,5 +13,8 @@ public class Post implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String text;
+	private String title;
+	private String author;
+	private String authorEmail;
 	private Date date;
 }

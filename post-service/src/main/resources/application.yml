@@ -11,7 +11,10 @@ endpoints:
   restart:
     enabled: true
     
-    
+spring:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user    
 
 #spring:
 #  rabbitmq:
