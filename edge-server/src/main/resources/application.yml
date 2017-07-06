@@ -1,12 +1,13 @@
 server:
   port: ${PORT:2000}
+
 info:
   component: Zuul Server
 
-#spring:
-#  oauth2:
-#    resource:
-#      userInfoUri: http://localhost:9999/uaa/user
+spring:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
 
 endpoints:
   restart:
@@ -17,11 +18,11 @@ endpoints:
     sensitive: false
 
 zuul:
-  #ignoredServices: "*"
+  ignoredServices: "*"
   prefix: /api
   routes:
-#  productapi: /product/**
-   post: /post/**
+    post: /post/**
+    teste: /teste/**
 
 logging:
   level:

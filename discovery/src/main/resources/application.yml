@@ -11,3 +11,9 @@ eureka:
   server:
     waitTimeInMsWhenSyncEmpty: 0
   password: ${SECURITY_USER_PASSWORD:password}
+
+spring:
+  boot:
+    admin:
+      url: http://localhost:7070 
+  

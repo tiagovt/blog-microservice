@@ -1,2 +1,2 @@
 
-include "post-service", "config-server", "discovery", "edge-server", "monitor-dashboard", "turbine"
+include "post-service", "config-server", "discovery", "edge-server", "monitor-dashboard", "turbine", "teste", "admin"

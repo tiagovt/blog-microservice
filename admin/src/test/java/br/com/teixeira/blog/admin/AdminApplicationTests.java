@@ -1,4 +1,4 @@
-package br.com.teixeira.blog.edgeserver;
+package br.com.teixeira.blog.admin;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class EdgeServerApplicationTests {
+public class AdminApplicationTests {
 
 	@Test
 	public void contextLoads() {
