@@ -6,13 +6,21 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/auth
     username: root
-    password: flatland
+    password: root123
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
       ddl-auto: update
+  boot:
+    admin:
+      url: http://localhost:7070
+      #username: admin
+      #password: admin123
+management:
+  security:
+    enabled: false            
       
 server:
   port: 9999

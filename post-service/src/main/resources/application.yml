@@ -1,6 +1,6 @@
 server:
-  port: ${PORT:8080}
-  #contextPath: /post
+  port: ${PORT:9090}
+  context-path: /post
 
 logging:
   levels:
@@ -19,11 +19,22 @@ endpoints:
   restart:
     enabled: true
     
-spring:
+security:
   oauth2:
     resource:
-      userInfoUri: http://localhost:9999/uaa/user    
+      user-info-uri: http://localhost:9999/uaa/user
 
+spring:      
+  boot:
+    admin:
+      url: http://localhost:7070
+      #username: admin
+      #password: admin123
+management:
+  security:
+    enabled: false
+    
+                
 #spring:
 #  rabbitmq:
 #    host: localhost

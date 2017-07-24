@@ -1,5 +1,7 @@
 package br.com.teixeira.blog.authserver.config;
 
+import java.security.KeyPair;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
@@ -15,9 +18,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+
 
 @Configuration
 @EnableAuthorizationServer
@@ -25,9 +32,6 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	@Autowired
-	private AuthenticationManager auth;
 
 	@Autowired
 	private DataSource dataSource;
@@ -48,7 +52,36 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 			.withClient("acme")
 			.secret("acmesecret")
 			.authorizedGrantTypes("authorization_code", "refresh_token", "implicit", "password", "client_credentials")
-			.scopes("webshop");
+			.scopes("webshop")
+//			.accessTokenValiditySeconds(60)
+			;
+	}
+	
+	@Bean
+	public JwtAccessTokenConverter jwtAccessTokenConverter() {
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+		KeyPair keyPair = new KeyStoreKeyFactory(
+				new ClassPathResource("keystore.jks"), "foobar".toCharArray())
+				.getKeyPair("test");
+		converter.setKeyPair(keyPair);
+		return converter;
+	}
+
+
+	@Override
+	public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+			throws Exception {
+		endpoints.authenticationManager(authenticationManager)
+			.tokenStore(tokenStore())
+			.accessTokenConverter(jwtAccessTokenConverter());
+		
+	}
+
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer oauthServer)
+			throws Exception {
+		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess(
+				"isAuthenticated()");
 	}
 	
 	/**
@@ -82,38 +115,14 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter{
 	 * We also attach the {@link AuthenticationManager} so that password grants
 	 * can be processed.
 	 */
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-			throws Exception {
-		endpoints.authorizationCodeServices(authorizationCodeServices())
-				.authenticationManager(auth).tokenStore(tokenStore())
-				.approvalStoreDisabled();
-	}
-
-	/**
-	 * Setup the client application which attempts to get access to user's
-	 * account after user permission.
-	 */
 //	@Override
-//	public void configure(ClientDetailsServiceConfigurer clients)
+//	public void configure(AuthorizationServerEndpointsConfigurer endpoints)
 //			throws Exception {
-//	
-//		clients.jdbc(dataSource)
-//				.passwordEncoder(passwordEncoder)
-//				.withClient("acme")
-//				.authorizedGrantTypes(/*"authorization_code" 
-//						,"client_credentials"*/ 
-//						"refresh_token",
-//						"password" 
-////						,"implicit"
-//						)
-//				.authorities("ROLE_CLIENT")
-////				.resourceIds("apis")
-//				.scopes("webshop")
-//				.secret("acmesecret")
-//				.accessTokenValiditySeconds(300);
-//		
+//		endpoints.authorizationCodeServices(authorizationCodeServices())
+//				.authenticationManager(auth).tokenStore(tokenStore())
+//				.approvalStoreDisabled();
 //	}
+
 	
 	/**
 	 * Configure the {@link AuthenticationManagerBuilder} with initial

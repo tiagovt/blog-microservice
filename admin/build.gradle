@@ -33,7 +33,7 @@ dependencies {
 	compile('de.codecentric:spring-boot-admin-server-ui:1.5.2')
 	compile('de.codecentric:spring-boot-admin-server-ui-hystrix:1.5.2')
 	compile('de.codecentric:spring-boot-admin-server-ui-turbine:1.5.2')
-	
+	compile('org.springframework.boot:spring-boot-starter-actuator')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

@@ -3,6 +3,8 @@ server:
 security:
   user:
     password: ${eureka.password} # Don't use a default password in a real app
+info:
+  component: Eureka Server
 
 eureka:
   client:
@@ -15,5 +17,9 @@ eureka:
 spring:
   boot:
     admin:
-      url: http://localhost:7070 
-  
+      url: http://localhost:7070
+      #username: admin
+      #password: admin123
+management:
+  security:
+    enabled: false        
