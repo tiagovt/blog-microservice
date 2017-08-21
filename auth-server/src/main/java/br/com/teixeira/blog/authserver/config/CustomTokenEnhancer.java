@@ -17,7 +17,6 @@ public class CustomTokenEnhancer implements TokenEnhancer
         User user = (User) authentication.getPrincipal();
         final Map<String, Object> additionalInfo = new HashMap<>();
 
-        additionalInfo.put("customInfo", "some_stuff_here");
         additionalInfo.put("authorities", user.getAuthorities());
         additionalInfo.put("userName", user.getUsername());
 
